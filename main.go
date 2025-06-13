@@ -57,9 +57,11 @@ func handleSubscription(sub Subscription, config *Config) {
 
 	archiveFile := filepath.Join(ArchivesDir, fmt.Sprintf("%s.txt", sub.Name))
 
+	destinationPath := filepath.Join(DownloadsDir, sub.Destination)
+
 	// Ensure destination directory exists
-	if err := os.MkdirAll(sub.Destination, 0755); err != nil {
-		log.Printf("Error creating destination directory %s: %v", sub.Destination, err)
+	if err := os.MkdirAll(destinationPath, 0755); err != nil {
+		log.Printf("Error creating destination directory %s: %v", destinationPath, err)
 		return
 	}
 
@@ -80,9 +82,9 @@ func handleSubscription(sub Subscription, config *Config) {
 	}
 
 	// check number of episodes already in destination
-	files, err := os.ReadDir(sub.Destination)
+	files, err := os.ReadDir(destinationPath)
 	if err != nil {
-		log.Printf("Error reading destination directory %s: %v", sub.Destination, err)
+		log.Printf("Error reading destination directory %s: %v", destinationPath, err)
 		return
 	}
 	episodesCount := 0
