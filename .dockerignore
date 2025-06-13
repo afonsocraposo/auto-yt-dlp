@@ -1,0 +1,18 @@
+# Ignore build artifacts and temporary files
+downloads/
+logs/
+archives/
+config/
+app/
+*.log
+.git/
+.gitignore
+README.md
+docker-compose.yml
+.dockerignore
+
+# Keep only the source files needed for build
+!*.go
+!go.mod
+!go.sum
+!start.sh

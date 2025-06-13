@@ -3,10 +3,12 @@ package main
 import (
 	"log"
 	"os"
-	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
+
+var ArchivesDir = "/app/archives"
+var DownloadsDir = "/app/downloads"
 
 type Subscription struct {
 	URL           string `yaml:"url"`
@@ -24,11 +26,7 @@ type Config struct {
 func LoadConfig() (*Config, error) {
 	configPath := os.Getenv("CONFIG")
 	if configPath == "" {
-		userConfigDir, err := os.UserConfigDir()
-		if err != nil {
-			return nil, err
-		}
-		configPath = filepath.Join(userConfigDir, "auto-yt-dlp", "config.yaml")
+		configPath = "/app/config/config.yaml"
 	}
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {

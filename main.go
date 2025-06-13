@@ -35,7 +35,7 @@ func main() {
 	}
 
 	// Create archive directory
-	if err := os.MkdirAll(config.ArchivesDir, 0755); err != nil {
+	if err := os.MkdirAll(ArchivesDir, 0755); err != nil {
 		log.Printf("Error creating archive directory %s: %v", config.ArchivesDir, err)
 		return
 	}
@@ -155,7 +155,6 @@ func getVideoList(sub Subscription) ([]VideoInfo, error) {
 		}
 
 		videos = append(videos, video)
-		fmt.Printf("Added video: ID=%s, Title=%s\n", video.ID, video.Title)
 	}
 
 	return videos, nil
@@ -180,9 +179,9 @@ func filterVideos(videos []VideoInfo, sub Subscription, archiveFile string) ([]V
 		// Apply include/exclude patterns
 		if shouldDownloadVideo(video, sub) {
 			filteredVideos = append(filteredVideos, video)
+			log.Printf("Video passed filter: %s (Title: %s)", video.ID, video.Title)
 		} else {
 			filteredCount++
-			log.Printf("Excluding video: %s (Title: %s)", video.ID, video.Title)
 		}
 	}
 
@@ -231,7 +230,7 @@ func loadArchiveEntries(archiveFile string) map[string]bool {
 func downloadVideo(video VideoInfo, episodeNumber int, sub Subscription, archiveFile string) bool {
 	cmd := exec.Command("yt-dlp",
 		"--download-archive", archiveFile,
-		"--output", filepath.Join(sub.Destination, fmt.Sprintf("%s E%03d", sub.Name, episodeNumber)+" [%(id)s].%(ext)s"),
+		"--output", filepath.Join(DownloadsDir, sub.Destination, fmt.Sprintf("%s E%03d", sub.Name, episodeNumber)+" [%(id)s].%(ext)s"),
 		"--format", "best[height<=1080]",
 		"--no-overwrites",
 		"--continue",
