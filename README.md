@@ -1,11 +1,6 @@
-Sure! Here’s a complete updated **README.md** file for your **auto-yt-dlp** project, incorporating the Docker Compose example and usage instructions:
-
-````markdown
 # auto-yt-dlp
 
 **auto-yt-dlp** is a lightweight, automated YouTube downloader built with Go and yt-dlp. It supports scheduled downloads using cron jobs inside a Docker container, allowing you to easily automate video downloads on a flexible schedule.
-
----
 
 ## Features
 
@@ -15,16 +10,12 @@ Sure! Here’s a complete updated **README.md** file for your **auto-yt-dlp** pr
 - Supports configuration via a YAML file
 - Logs output to stdout for easy container log management
 
----
-
 ## Getting Started
 
 ### Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) installed
 - (Optional) [Docker Compose](https://docs.docker.com/compose/install/) for multi-service setups
-
----
 
 ## Configuration
 
@@ -40,8 +31,6 @@ subscriptions:
     max_videos: 10
     filter: "I Tried the Top 50 Airbnbs in America"
 ```
-
----
 
 ## Docker
 
@@ -60,9 +49,6 @@ docker run -d \
   -v $(pwd)/archives:/app/archives \
   auto-yt-dlp
 ```
-````
-
----
 
 ### Docker Compose
 
@@ -97,24 +83,11 @@ View logs:
 docker-compose logs -f auto-yt-dlp
 ```
 
----
 
 ## Environment Variables
 
 - `TZ`: Time zone (default: `UTC`)
 - `CRON_SCHEDULE`: Cron expression for scheduling downloads (default: `0 * * * *` — every hour)
-
----
-
-## Logs
-
-Logs are output to stdout and can be viewed using Docker’s logging commands:
-
-```bash
-docker logs -f auto-yt-dlp
-```
-
----
 
 ## License
 
