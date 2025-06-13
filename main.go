@@ -231,7 +231,7 @@ func loadArchiveEntries(archiveFile string) map[string]bool {
 func downloadVideo(video VideoInfo, episodeNumber int, sub Subscription, archiveFile string) bool {
 	cmd := exec.Command("yt-dlp",
 		"--download-archive", archiveFile,
-		"--output", filepath.Join(sub.Destination, fmt.Sprintf("%s Episode %03d", sub.Name, episodeNumber)+" [%(id)s].%(ext)s"),
+		"--output", filepath.Join(sub.Destination, fmt.Sprintf("%s E%03d", sub.Name, episodeNumber)+" [%(id)s].%(ext)s"),
 		"--format", "best[height<=1080]",
 		"--no-overwrites",
 		"--continue",
