@@ -21,7 +21,6 @@ type Subscription struct {
 
 type Config struct {
 	Subscriptions []Subscription `yaml:"subscriptions"`
-	ArchivesDir   string         `yaml:"archives_dir"`
 }
 
 func LoadConfig() (*Config, error) {

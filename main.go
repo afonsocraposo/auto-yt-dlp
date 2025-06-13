@@ -36,7 +36,7 @@ func main() {
 
 	// Create archive directory
 	if err := os.MkdirAll(ArchivesDir, 0755); err != nil {
-		log.Printf("Error creating archive directory %s: %v", config.ArchivesDir, err)
+		log.Printf("Error creating archive directory %s: %v", ArchivesDir, err)
 		return
 	}
 
@@ -55,7 +55,7 @@ func checkDependencies() bool {
 func handleSubscription(sub Subscription, config *Config) {
 	log.Printf("Handling subscription: %s", sub.Name)
 
-	archiveFile := filepath.Join(config.ArchivesDir, fmt.Sprintf("%s.txt", sub.Name))
+	archiveFile := filepath.Join(ArchivesDir, fmt.Sprintf("%s.txt", sub.Name))
 
 	// Ensure destination directory exists
 	if err := os.MkdirAll(sub.Destination, 0755); err != nil {
