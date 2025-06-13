@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -100,8 +101,11 @@ func handleSubscription(sub Subscription, config *Config) {
 	}
 
 	downloadCount := 0
+	// invert the order of videos to download since the oldest videos are at the end of the list
+	slices.Reverse(filteredVideos)
 	for _, video := range filteredVideos {
-		success := downloadVideo(video, episodesCount+downloadCount+1, sub, archiveFile)
+		episodesCount++ // Increment episode count for each video to be downloaded
+		success := downloadVideo(video, episodesCount, sub, archiveFile)
 		if success {
 			downloadCount++
 			log.Printf("Downloaded video: %s (Title: %s)", video.ID, video.Title)
@@ -237,7 +241,6 @@ func downloadVideo(video VideoInfo, episodeNumber int, sub Subscription, archive
 	cmd := exec.Command("yt-dlp",
 		"--download-archive", archiveFile,
 		"--output", filepath.Join(DownloadsDir, sub.Destination, filename),
-		"--format", "best[height<=1080]",
 		"--no-overwrites",
 		"--continue",
 		"--ignore-errors",
