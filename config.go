@@ -11,11 +11,12 @@ var ArchivesDir = "/app/archives"
 var DownloadsDir = "/app/downloads"
 
 type Subscription struct {
-	URL           string `yaml:"url"`
-	Destination   string `yaml:"destination"`
-	MaxVideos      int    `yaml:"max_videos"`
-	Filter        string `yaml:"filter"`
-	Name          string `yaml:"name"`
+	URL              string `yaml:"url"`
+	Destination      string `yaml:"destination"`
+	MaxVideos        int    `yaml:"max_videos"`
+	Filter           string `yaml:"filter"`
+	FilenameTemplate string `yaml:"filename_template"`
+	Name             string `yaml:"name"`
 }
 
 type Config struct {

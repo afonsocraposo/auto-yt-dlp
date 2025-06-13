@@ -10,7 +10,7 @@ app/
 README.md
 docker-compose.yml
 .dockerignore
-
+config.yaml
 # Keep only the source files needed for build
 !*.go
 !go.mod

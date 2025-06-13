@@ -115,7 +115,7 @@ func handleSubscription(sub Subscription, config *Config) {
 func getVideoList(sub Subscription) ([]VideoInfo, error) {
 	// Use yt-dlp to get only specific fields in a custom format
 	cmd := exec.Command("yt-dlp",
-		"--print", "%(id)s|%(title)s|%(webpage_url)s",
+		"--print", "%(id)s:|:%(title)s:|:%(webpage_url)s",
 		"--playlist-end", strconv.Itoa(sub.MaxVideos),
 		"--ignore-errors",
 		"--no-warnings",
@@ -142,7 +142,7 @@ func getVideoList(sub Subscription) ([]VideoInfo, error) {
 		}
 
 		// Split by the pipe delimiter
-		parts := strings.Split(line, "|")
+		parts := strings.Split(line, ":|:")
 		if len(parts) != 3 {
 			fmt.Printf("Warning: line %d has %d parts instead of 3: %s\n", i, len(parts), line)
 			continue
@@ -228,9 +228,13 @@ func loadArchiveEntries(archiveFile string) map[string]bool {
 }
 
 func downloadVideo(video VideoInfo, episodeNumber int, sub Subscription, archiveFile string) bool {
+	filename := fmt.Sprintf("%s E%03d", sub.Name, episodeNumber)+" [%(id)s].%(ext)s"
+	if sub.FilenameTemplate != "" {
+		filename = sub.FilenameTemplate
+	}
 	cmd := exec.Command("yt-dlp",
 		"--download-archive", archiveFile,
-		"--output", filepath.Join(DownloadsDir, sub.Destination, fmt.Sprintf("%s E%03d", sub.Name, episodeNumber)+" [%(id)s].%(ext)s"),
+		"--output", filepath.Join(DownloadsDir, sub.Destination, filename),
 		"--format", "best[height<=1080]",
 		"--no-overwrites",
 		"--continue",
