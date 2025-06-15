@@ -246,7 +246,8 @@ func downloadVideo(video VideoInfo, episodeNumber int, sub Subscription, archive
 		"--ignore-errors",
 		"--embed-thumbnail",
 		"--add-metadata",
-		"--remux-video", "mp4",
+		"-S", "res:1080,ext:mp4:m4a",
+		"--recode", "mp4",
 		video.URL,
 	)
 
